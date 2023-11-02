@@ -1,7 +1,9 @@
 return {
   "nvim-tree/nvim-tree.lua",
   commit = "7e3c0bee7b246ca835d5f7453db6fa19de359bab",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = {
+    { "nvim-tree/nvim-web-devicons", commit = "5de460ca7595806044eced31e3c36c159a493857" },
+  },
   keys = {
     { '<F1>', "<CMD>NvimTreeToggle<CR>", desc = "Toggle NvimTree" }
   },
@@ -20,10 +22,11 @@ return {
     nvimtree.setup({
       view = {
         width = 35,
-        relativenumber = true,
+        relativenumber = false,
       },
       -- change folder arrow icons
       renderer = {
+        highlight_git = false,
         indent_markers = {
           enable = true,
         },
@@ -51,7 +54,7 @@ return {
         },
       },
       filters = {
-        custom = { ".DS_Store" },
+        custom = { ".DS_Store", "^.git$" },
       },
       modified = {
         enable = true,
