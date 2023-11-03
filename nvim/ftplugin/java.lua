@@ -31,13 +31,13 @@ local config = {
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
     '-Xmx1g',
-    '-javaagent:/root/lombok.jar',
+    '-javaagent:/opt/lombok.jar',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
-    '-jar', '/root/jdtls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar',
-    '-configuration', '/root/jdtls/config_linux',
+    '-jar', '/opt/jdtls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar',
+    '-configuration', '/opt/jdtls/config_linux',
     '-data', '/tmp'
   },
   root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
@@ -51,7 +51,7 @@ local config = {
   },
   init_options = {
     bundles = {
-      vim.fn.glob("/root/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+      vim.fn.glob("/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
     }
   },
 }
