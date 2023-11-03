@@ -8,8 +8,8 @@ keymap("n", "<C-s>", ":w<CR>", { noremap = true })
 keymap("n", "<leader>t", ":bo split term://bash<CR>i", { noremap = true})
 
 -- In visual mode move text with J and K
-keymap("x", "J", ":move '>+1gv-gv", opts)
-keymap("x", "K", ":move '<-2gv-gv", opts)
+keymap("x", "J", ":move '>+1gv-gv<CR>V", opts)
+keymap("x", "K", ":move '<-2gv-gv<CR>V", opts)
 
 -- Copy relative path with F4, usually I use this in tests
 keymap("n", "<F4>", ':let @+ = fnamemodify(expand("%"), ":~:.")<CR>', opts)
