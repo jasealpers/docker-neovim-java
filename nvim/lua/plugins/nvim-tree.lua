@@ -7,7 +7,7 @@ return {
   keys = {
     { '<F1>', "<CMD>NvimTreeToggle<CR>", desc = "Toggle NvimTree" }
   },
-  config = function()
+  config = function(_, opts)
     local nvimtree = require("nvim-tree")
 
     -- recommended settings from nvim-tree documentation
@@ -19,49 +19,50 @@ return {
     vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 
     -- configure nvim-tree
-    nvimtree.setup({
-      view = {
-        width = 35,
-        relativenumber = false,
-      },
-      -- change folder arrow icons
-      renderer = {
-        highlight_git = false,
-        indent_markers = {
-          enable = true,
-        },
-        icons = {
-          glyphs = {
-            folder = {
-              arrow_closed = "", -- arrow when folder is closed
-              arrow_open = "", -- arrow when folder is open
-            },
-          },
-        },
-      },
-      -- Open file in previous window
-      actions = {
-        open_file = {
-          quit_on_open = false,
-          eject = true,
-          window_picker = {
-            enable = true,
-            picker = function ()
-              -- this doesn't work if there wasn't a previous window
-              return vim.fn.win_getid(vim.fn.winnr('#'))
-            end,
-          },
-        },
-      },
-      filters = {
-        custom = { ".DS_Store", "^.git$" },
-      },
-      modified = {
+    nvimtree.setup(opts)
+  end,
+  opts = {
+    view = {
+      width = 35,
+      relativenumber = false,
+    },
+    -- change folder arrow icons
+    renderer = {
+      highlight_git = false,
+      indent_markers = {
         enable = true,
       },
-      git = {
-        ignore = false,
+      icons = {
+        glyphs = {
+          folder = {
+            arrow_closed = "", -- arrow when folder is closed
+            arrow_open = "", -- arrow when folder is open
+          },
+        },
       },
-    })
-  end,
+    },
+    -- Open file in previous window
+    actions = {
+      open_file = {
+        quit_on_open = false,
+        eject = true,
+        window_picker = {
+          enable = true,
+          picker = function ()
+            -- this doesn't work if there wasn't a previous window
+            return vim.fn.win_getid(vim.fn.winnr('#'))
+          end,
+        },
+      },
+    },
+    filters = {
+      custom = { ".DS_Store", "^.git$" },
+    },
+    modified = {
+      enable = true,
+    },
+    git = {
+      ignore = false,
+    },
+  },
 }

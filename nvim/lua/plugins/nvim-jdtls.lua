@@ -7,19 +7,12 @@ return {
     { "rcarriga/nvim-dap-ui", commit = "34160a7ce6072ef332f350ae1d4a6a501daf0159" },
     { "nvim-telescope/telescope.nvim" },
   },
-  ft = java,
+  ft = "java",
   config = function()
     require('telescope').load_extension('dap')
   end,
   keys =
   {
-    { 'K', function() vim.lsp.buf.hover() end, desc = "Hover" },
-    { 'gd', function() vim.lsp.buf.definition() end, desc = "Definition" },
-    { 'gi', function() vim.lsp.buf.implementation() end, desc = "Implementation" },
-    { 'gr', function() vim.lsp.buf.references() end, desc = "References" },
-
-    { 'df', function() vim.lsp.buf.code_action() end, desc = "Code Action" },
-
     { '<leader>dL', function() require('dap.ext.vscode').load_launchjs(vim.api.nvim_buf_get_name(0)) end, desc = "Load Launch Config" },
     { '<leader>dd', function() require('dapui').open() end, desc = "Start Debugging" },
     { '<leader>de', function() require('dapui').close() end, desc = "Stop Debugging" },

@@ -19,7 +19,7 @@
 --   ]
 -- }
 --
--- Source this file with `lua require('dap.ext.vscode').load_launchjs(<filename>) OR
+-- Source the launch config file with `lua require('dap.ext.vscode').load_launchjs(<filename>) OR
 -- keymap <leader>dL while in the launch.json window
 
 local config = {
@@ -51,9 +51,10 @@ local config = {
   },
   init_options = {
     bundles = {
-      vim.fn.glob("/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+      vim.fn.glob("/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", false)
     }
   },
 }
 require('jdtls').start_or_attach(config)
 require('dapui').setup()
+require('functions.keymaps').AddLspKeymaps(0)
