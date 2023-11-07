@@ -23,6 +23,9 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 -- In insert mode go to normal mode with jk
 keymap("i", "jk", "<ESC>", opts)
 
+-- CTRL-N exits insert mode in the terminal
+keymap("t", "<C-n>", [[<C-\><C-n>]], opts)
+
 -- Zoom in/out of the current window using tabs
 keymap("n", "<leader>z", "", {
   desc = "Zoom Window",

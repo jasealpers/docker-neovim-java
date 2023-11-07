@@ -28,17 +28,13 @@ return {
     { '<leader>dlp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, desc = "Log Point" },
     { '<leader>dlc', function() require('dap').set_breakpoint(nil, vim.fn.input('Condition: '), vim.fn.input('Log point message: ')) end, desc = "Conditional Log Point" },
     { '<leader>drl', function() require('dap').run_last() end, desc = "Run Last" },
-    { '<leader>dor', function() require('dap').repl.open() end, desc = "REPL" },
-    { '<leader>doh', function() require('dap.ui.widgets').hover() end, desc = "Hover" },
-    { '<leader>dop', function() require('dap.ui.widgets').preview() end, desc = "Preview" },
-    { '<leader>dof', function()
+    { '<leader>dr', function() require('dap').repl.open() end, desc = "REPL" },
+    { '<leader>dj', function() require('dap').down() end, desc = "Down a Frame" },
+    { '<leader>dk', function() require('dap').up() end, desc = "Up a Frame" },
+    { '<leader>df', function()
       local widgets = require('dap.ui.widgets')
       widgets.centered_float(widgets.frames)
-    end, desc = "Frames" },
-    { '<leader>dos', function()
-      local widgets = require('dap.ui.widgets')
-      widgets.centered_float(widgets.scopes)
-    end, desc = "Scopes" },
+    end, desc = "Select Frame" },
   },
   config = function()
     require('telescope').load_extension('dap')
@@ -58,5 +54,14 @@ return {
 
     -- Source project specific lua files with dap configuration
     require('functions.debug').ReloadDebugConfig()
+
+    -- Create GDB command to execute in REPL
+    vim.api.nvim_create_user_command('GDB',
+      function(opts)
+        require('dap').repl.execute('`' .. opts.args)
+      end,
+      { nargs = "*" }
+    )
+
   end,
 }

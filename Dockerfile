@@ -1,8 +1,11 @@
 FROM ubuntu:22.04
 
+ENV NODE_VERSION v20.9.0
+ENV PATH="${PATH}:/usr/local/lib/nodejs/node-${NODE_VERSION}-linux-x64/bin:/opt/nvim-linux64/bin"
+
 WORKDIR /opt
 
-RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep clang-format vim htop clang clangd gdb unzip && \
+RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep clang-format vim htop clang clangd gdb unzip xz-utils && \
     wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
     tar -xzvf nvim-linux64.tar.gz && \
     wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz && \
@@ -24,12 +27,16 @@ RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep
     echo "disableStartupPopups: true" > /root/.config/lazygit/config.yml && \
     mkdir /opt/lua-lsp && \
     wget https://github.com/LuaLS/lua-language-server/releases/download/3.7.0/lua-language-server-3.7.0-linux-x64.tar.gz && \
-    tar -C /opt/lua-lsp -xzvf lua-language-server-3.7.0-linux-x64.tar.gz
-
-COPY nvim /root/.config/nvim
+    tar -C /opt/lua-lsp -xzvf lua-language-server-3.7.0-linux-x64.tar.gz && \
+    curl -sL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz -o /opt/nodejs.tar.xz && \
+    mkdir -p /usr/local/lib/nodejs && tar -xJvf /opt/nodejs.tar.xz -C /usr/local/lib/nodejs && \
+    npm install -g @angular/language-server @angular/cli typescript typescript-language-server pyright
 
 # USER environment variable is needed for dap.utils pick_process()
 ENV USER root
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
+
+COPY nvim /root/.config/nvim
 
 RUN /opt/nvim-linux64/bin/nvim --headless "+Lazy! sync" +qa
 

@@ -5,6 +5,7 @@ return {
   dependencies = {
     { "hrsh7th/cmp-nvim-lsp", commit = "44b16d11215dce86f253ce0c30949813c0a90765" },
     { "folke/neodev.nvim", commit = "80487e4f7bfa11c2ef2a1b461963db019aad6a73"}, -- Add vim functions to lua lsp
+    { "nvim-telescope/telescope.nvim" },
   },
   config = function()
     local lspconfig = require('lspconfig')
@@ -25,6 +26,9 @@ return {
 
     require('neodev').setup() -- Must setup neodev before configuring lua lsp
 
+    --
+    -- Lua
+    --
     lspconfig.lua_ls.setup {
       cmd = { '/opt/lua-lsp/bin/lua-language-server' },
       capabilities = capabilities,
@@ -42,10 +46,52 @@ return {
       },
     }
 
+    --
+    -- Cpp
+    --
     lspconfig.clangd.setup {
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "c", "h", "cpp", "hpp", "inl" },
+    }
+
+    -- Disable lsp diagnostics for headers since clangd can't handle them
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+      function(_, result, ctx, config)
+        local ext = result.uri:match("^.+%.(.+)$")
+        if ext == "hpp" or ext == "h" or ext == "inl" then
+          result.diagnostics = {}
+        end
+        vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+      end,
+      {}
+    )
+
+    -- Set local cpp variables to purple instead of white
+    vim.api.nvim_set_hl(0, '@lsp.type.variable.cpp', { link = 'NightflyPurple' })
+
+    --
+    -- Angular
+    --
+    lspconfig.angularls.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    }
+
+    --
+    -- Typescript
+    --
+    lspconfig.tsserver.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    }
+
+    --
+    -- Python
+    --
+    lspconfig.pyright.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
     }
 
   end,

@@ -10,20 +10,23 @@ return {
   config = function(_, opts)
     local nvimtree = require("nvim-tree")
 
-    -- recommended settings from nvim-tree documentation
+    -- Recommended settings from nvim-tree documentation
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
-    -- change color for arrows in tree to light blue
+    -- Change color for arrows in tree to light blue
     vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
     vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
+
+    -- Avoid coloring for normal files
+    vim.cmd([[ highlight! link NvimTreeExecFile Normal ]])
 
     -- configure nvim-tree
     nvimtree.setup(opts)
   end,
   opts = {
     view = {
-      width = 35,
+      width = 60,
       relativenumber = false,
     },
     -- change folder arrow icons
