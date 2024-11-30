@@ -24,7 +24,7 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("i", "jk", "<ESC>", opts)
 
 -- CTRL-N exits insert mode in the terminal
-keymap("t", "<C-n>", [[<C-\><C-n>]], opts)
+keymap('t', '<C-n>', [[<C-\><C-n>]], opts)
 
 -- Zoom in/out of the current window using tabs
 keymap("n", "<leader>z", "", {
@@ -65,13 +65,15 @@ keymap("n", "<F12>", "", {
 })
 
 -- Add group names to which-key
-require('which-key').register({
-  g = { name = "Goto" },
-  ["<leader>l"] = { name = "List" },
-  ["<leader>g"] = { name = "Git" },
-  ["<leader>d"] = { name = "Debugging",
-    l = { name = "Logging Breakpoints" },
-    o = { name = "Open Windows" },
-    r = { name = "Run" },
-  },
+require('which-key').add({
+  { "g", group = "Goto" },
+  { "z", group = "Folds" },
+  { "<leader>f", group = "Find" },
+  { "<leader>l", group = "List" },
+  { "<leader>g", group = "Git" },
+  { "<leader>c", group = "Code" },
+  { "<leader>d", group = "Debugging" },
+  { "<leader>dl", group = "Logging Breakpoints" },
+  { "<leader>do", group = "Open Windows" },
+  { "<leader>dr", group = "Run" },
 })

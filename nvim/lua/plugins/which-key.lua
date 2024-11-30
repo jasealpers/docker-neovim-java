@@ -1,6 +1,6 @@
 return {
   "folke/which-key.nvim",
-  commit = "4433e5ec9a507e5097571ed55c02ea9658fb268a",
+  commit = "9b365a6428a9633e3eeb34dbef1b791511c54f70",
   event = "VeryLazy",
   init = function()
     vim.o.timeout = true

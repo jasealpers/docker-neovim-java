@@ -7,24 +7,41 @@ return {
   lazy = true,
   keys =
   {
-    { '?f', "<cmd>Telescope find_files<CR>", desc = "Find File" },
-    { '?c', "<cmd>Telescope colorscheme<CR>", desc = "Colorscheme" },
-    { '?r', "<cmd>Telescope oldfiles<CR>", desc = "Recent Files" },
-    { '?b', "<cmd>Telescope buffers<CR>", desc = "Buffers" },
-    { '?m', "<cmd>Telescope marks<CR>", desc = "Marks" },
-    { '??', "<cmd>Telescope live_grep<CR>", desc = "Search" },
+    { '<leader>lc', "<cmd>Telescope colorscheme<CR>", desc = "List Colorschemes" },
+    { '<leader>lf', "<cmd>Telescope oldfiles<CR>", desc = "List Recent Files" },
+    { '<leader>lb', "<cmd>Telescope buffers<CR>", desc = "List Buffers" },
+    { '<leader>lm', "<cmd>Telescope marks<CR>", desc = "List Marks" },
+    { '<leader>lk', "<cmd>Telescope keymaps<CR>", desc = "Keymaps" },
+    { '<leader>lc', "<cmd>Telescope commands<CR>", desc = "Commands" },
+    { '<leader>lr', "<cmd>Telescope registers<CR>", desc = "Registers" },
 
-    { 'sh', "<cmd>Telescope help_tags<CR>", desc = "Search Help" },
-    { 'sm', "<cmd>Telescope man_pages<CR>", desc = "Man Pages" },
-    { 'sr', "<cmd>Telescope registers<CR>", desc = "Registers" },
-    { 'sk', "<cmd>Telescope keymaps<CR>", desc = "Keymaps" },
-    { 'sc', "<cmd>Telescope commands<CR>", desc = "Commands" },
+    { '<leader>fh', "<cmd>Telescope help_tags<CR>", desc = "Find Help" },
+
+    { '<leader>gt', "<cmd>Telescope git_status<CR>", desc = "Status" },
+    { '<leader>gB', "<cmd>Telescope git_branches<CR>", desc = "Branches" },
   },
   opts = {
+    defaults = {
+      prompt_prefix = " ",
+      selection_caret = " ",
+      mappings = {
+        n = {
+          ['<c-d>'] = require('telescope.actions').delete_buffer,
+          ['<c-k>'] = require('telescope.actions').cycle_history_prev,
+          ['<c-j>'] = require('telescope.actions').cycle_history_next
+        }, -- n
+        i = {
+          ['<c-d>'] = require('telescope.actions').delete_buffer,
+          ['<c-k>'] = require('telescope.actions').cycle_history_prev,
+          ['<c-j>'] = require('telescope.actions').cycle_history_next
+        } -- i
+      } -- mappings
+    },
     pickers = {
       find_files = {
-        find_command = {'rg', '--files', '--hidden', '-g', '!.git'},
+        find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
       },
     },
   },
+  config = true,
 }

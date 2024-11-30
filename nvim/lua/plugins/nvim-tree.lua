@@ -65,6 +65,7 @@ return {
       enable = true,
     },
     git = {
+      enable = true,
       ignore = false,
     },
   },

@@ -16,6 +16,7 @@ return {
 
     { '<leader>dd', function() require('dapui').open() end, desc = "Start Debugging" },
     { '<leader>de', function() require('dapui').close() end, desc = "Stop Debugging" },
+    { '<leader>dq', function() require('dap').terminate() end, desc = "Terminate Debug Session" },
     { '<F5>', function() require('dap').continue() end, desc = "Continue" },
     { '<F6>', function() require('dap').step_over() end, desc = "Step Over" },
     { '<F7>', function() require('dap').step_into() end, desc = "Step Into" },
@@ -31,6 +32,14 @@ return {
     { '<leader>dr', function() require('dap').repl.open() end, desc = "REPL" },
     { '<leader>dj', function() require('dap').down() end, desc = "Down a Frame" },
     { '<leader>dk', function() require('dap').up() end, desc = "Up a Frame" },
+    { '<leader>dh', function()
+      -- Remap <Esc> to close the hover box and then delete the mapping
+      -- vim.keymap.set('n', '<Esc>', function()
+      --   vim.cmd([[execute "normal! \<C-W>q"]])
+      --   vim.keymap.del('n', '<Esc>')
+      -- end)
+      require('dap.ui.widgets').hover()
+    end, desc = "Hover" },
     { '<leader>df', function()
       local widgets = require('dap.ui.widgets')
       widgets.centered_float(widgets.frames)
@@ -62,6 +71,5 @@ return {
       end,
       { nargs = "*" }
     )
-
   end,
 }

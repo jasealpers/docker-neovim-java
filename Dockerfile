@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.10
 
 ENV NODE_VERSION v20.9.0
 ENV PATH="${PATH}:/usr/local/lib/nodejs/node-${NODE_VERSION}-linux-x64/bin:/opt/nvim-linux64/bin"
@@ -19,7 +19,8 @@ RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep
     wget https://github.com/microsoft/vscode-cpptools/releases/download/v1.17.5/cpptools-linux.vsix && \
     unzip cpptools-linux.vsix -d cpptools-linux && \
     chmod u+x /opt/cpptools-linux/extension/debugAdapters/bin/OpenDebugAD7 && \
-    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_0.40.2_Linux_x86_64.tar.gz" && \
+    git clone --depth 1 https://github.com/junegunn/fzf.git /fzf && /fzf/install --bin && cp /fzf/bin/fzf /usr/local/bin && rm -rf /fzf && \
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz" && \
     tar xf lazygit.tar.gz lazygit && install lazygit /usr/local/bin && rm /opt/lazygit && \
     cd java-debug && mvn clean install -DskipTests && \
     rm /opt/*.tar.gz /opt/*.vsix && \
@@ -32,10 +33,15 @@ RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep
     mkdir -p /usr/local/lib/nodejs && tar -xJvf /opt/nodejs.tar.xz -C /usr/local/lib/nodejs && \
     npm install -g @angular/language-server @angular/cli typescript typescript-language-server pyright
 
+#RUN useradd -ms /bin/bash user
+#USER user
+
 # USER environment variable is needed for dap.utils pick_process()
+#ENV USER user
 ENV USER root
 ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
 
+#COPY nvim /home/user/.config/nvim
 COPY nvim /root/.config/nvim
 
 RUN /opt/nvim-linux64/bin/nvim --headless "+Lazy! sync" +qa
