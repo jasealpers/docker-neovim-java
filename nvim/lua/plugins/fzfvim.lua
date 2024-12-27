@@ -14,7 +14,7 @@ return {
   end,
   keys = {
     { '<leader>fs', function()
-      local command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -g "!{tags,cscope.out}" -- %s /opt/postgresql-src .'
+      local command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s .'
       local initial_command = string.format(command_fmt, '.')
       local reload_command = string.format(command_fmt, '{q}')
       local spec = {
@@ -26,7 +26,7 @@ return {
 
     { '<leader>ff', function()
       vim.call('fzf#run', vim.call('fzf#wrap', {
-        source = "find . /opt/postgresql-src -not -path '*/.*' -not -path '*-build/*' -not -path '*.o' -not -path '*.bc' -not -path '*.pyc' -type f",
+        source = "find . -not -path '*/.*' -not -path '*-build/*' -not -path '*.o' -not -path '*.bc' -not -path '*.pyc' -type f",
         sink = 'e',
         options = '--preview="~/.local/share/nvim/lazy/fzf.vim/bin/preview.sh {}"'
       }, false))

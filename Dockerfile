@@ -1,11 +1,11 @@
 FROM ubuntu:24.10
 
-ENV NODE_VERSION v20.9.0
+ENV NODE_VERSION=v20.9.0
 ENV PATH="${PATH}:/usr/local/lib/nodejs/node-${NODE_VERSION}-linux-x64/bin:/opt/nvim-linux64/bin"
 
 WORKDIR /opt
 
-RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep clang-format vim htop clang clangd gdb unzip xz-utils && \
+RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep clang-format vim htop clang clangd gdb unzip xz-utils file highlight && \
     wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
     tar -xzvf nvim-linux64.tar.gz && \
     wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz && \
@@ -38,8 +38,8 @@ RUN apt-get -y update && apt-get -y install git openjdk-17-jdk curl wget ripgrep
 
 # USER environment variable is needed for dap.utils pick_process()
 #ENV USER user
-ENV USER root
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
+ENV USER=root
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
 
 #COPY nvim /home/user/.config/nvim
 COPY nvim /root/.config/nvim
